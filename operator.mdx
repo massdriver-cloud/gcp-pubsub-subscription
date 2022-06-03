@@ -1,10 +1,4 @@
-# Operator Guide
-
-This is the guide for your bundle. It will appear under the `guide` button in Massdriver.
-
-Use it to describe to users how the bundle works, use cases for the bundle, and event examples.
-
-<!-- We may want to polish this for template before releasing --> 
+# Operator Guide for "{type}"
 
 ## TODO:
 
@@ -26,23 +20,30 @@ _Common use cases for this bundle_
 
 ### Guided Configs
 
-_Describe the guided configs_
++ Development
+  + a shorter acknowledgement deadline
++ Production
+  + monitoring enabled
+  + a longer acknowledgement deadline
 
 ## Design
 
 ### How It Works
 
-_Describe how it works_
++ This bundle takes a `gcp-pubsub-topic`, `mrc`, and credentials.
++ It creates a configurable subscription to that topic.
 
 #### Best Practices
 
-#### Security 
+#### Security
 
 #### Auditing
 
 #### Compliance
 
 #### Observability
+
++ The bundle ships with the ability to alarm on one threshold, the `pubsub.googleapis.com/subscription/backlog_bytes` metric.
 
 ### Trade-offs
 

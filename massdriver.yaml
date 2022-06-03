@@ -1,66 +1,115 @@
-# This file will be used to generate all of the schema-*.json files in a bundle
 schema: draft-07
-name: "gcp-pubsub-subscription"
-description: "this"
-ref: github.com/YOUR_NAME_HERE/gcp-pubsub-subscription
-access: "public"
-type: "bundle"
+name: gcp-pubsub-subscription
+description: "GCP subscription to a PubSub Topic"
+ref: github.com/massdriver-cloud/massdriver-bundles
+access: public
+type: bundle
 
 steps:
   - path: src
     provisioner: terraform
 
-# schema-params.json
-# JSON Schema sans-fields above
 params:
   examples:
-    - foo: US-West 2 VPC
-    - foo: US-East 1 VPC
+    - __name: Development
+      enable_message_ordering: false
+      ack_deadline_seconds: 10
+    - __name: Production
+      enable_message_ordering: true
+      message_retention_duration_seconds: 800
+      ack_deadline_seconds: 30
+      monitoring_configuration:
+        enabled: true
   required:
-    - foo
+    - enable_message_ordering
+    - message_retention_duration_seconds
+    - ack_deadline_seconds
+    - retain_acked_messages
+    - minimum_backoff_seconds
+    - monitoring_configuration
   properties:
-    foo:
-      type: string
-      title: Foo
-      description: Name of gcp-pubsub-subscription
-      default: ""
-      examples:
-        - US-West 2 VPC
-        - US-East 1 VPC
+    enable_message_ordering:
+      type: boolean
+      title: Enable Message Ordering
+      description: Ensures that messages are delivered in the same order they are received.
+      default: false
+    message_retention_duration_seconds:
+      type: integer
+      title: Message Retention Duration Seconds
+      description: How long to retain unacknowledged messages in the subscription's backlog, from the moment a message is published.
+      default: 600
+      minimum: 600
+      maximum: 604800
+    ack_deadline_seconds:
+      type: integer
+      title: Ack Deadline Seconds
+      description: This value is the maximum time after a subscriber receives a message before the subscriber should acknowledge the message.
+      default: 20
+      minimum: 10
+      maximum: 600
+    retain_acked_messages:
+      type: boolean
+      title: Retain Acked Messages
+      description: Indicates whether to retain acknowledged messages. If true, then messages are not expunged from the subscription's backlog, even if they are acknowledged, until they fall out of the messageRetentionDuration window.
+      default: false
+    minimum_backoff_seconds:
+      type: integer
+      title: Minimum Backoff
+      description: The minimum delay between consecutive deliveries of a given message. Value should be between 0 and 600 seconds.
+      minimum: 0
+      maximum: 600
+      default: 10
+    monitoring_configuration:
+      type: object
+      title: Monitoring Configuration
+      description: Enable and configure monitoring for your PubSub subscription.
+      required: []
+      properties:
+        enabled:
+          type: boolean
+          title: Enable Monitoring
+          description: Enables monitoring for this bundle
+          default: false
+        backlog_bytes_above:
+          type: integer
+          title: Retained Bytes Above
+          default: 1000
+          minimum: 0
+          # 1MB
+          maximum: 1000000
 
-# schema-connections.json
-# Named list of input connections (artifacts) (map[name]artifact)
 connections:
-  properties: {}
-  # required:
-  # - aws_authentication
-  # - network
-  # properties:
-  #   aws_authentication:
-  #     $ref: massdriver/aws-iam-role
-  #   network:
-  #     $ref: massdriver/aws-regional-cloud
+  required:
+    - gcp_authentication
+    # I know the canvas would look weird, this is
+    # only here for now, for region and monitoring
+    - subnetwork
+    - topic
+  properties:
+    gcp_authentication:
+      $ref: massdriver/gcp-service-account
+    subnetwork:
+      $ref: massdriver/gcp-subnetwork
+    topic:
+      $ref: massdriver/gcp-pubsub-topic
 
-# schema-artifacts.json
-# Named list of output artifacts  (map[name]artifact)
 artifacts:
-  properties: {}
-  # required:
-  #   - network
-  # properties:
-  #   network:
-  #     $ref: massdriver/aws-regional-cloud
+  required:
+    - subscription
+  properties:
+    subscription:
+      $ref: massdriver/gcp-pubsub-subscription
 
-# schema-ui.json
-# List of form customizations for params-schema
 ui:
   ui:order:
+    - enable_message_ordering
+    - message_retention_duration_seconds
+    - ack_deadline_seconds
+    - retain_acked_messages
+    - minimum_backoff_seconds
+    - monitoring_configuration
     - "*"
-  ## set top level ui:wiget
-  # secret_key:
-  #    ui:widget: "password"
-  ## Set key in an array of objects
-  # secrets:
-  #   items:
-  #     mdKeyId:
-  #       ui:widget: "hidden"
+  monitoring_configuration:
+    ui:order:
+      - enabled
+      - backlog_bytes_above
