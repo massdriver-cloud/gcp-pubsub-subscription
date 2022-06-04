@@ -12,7 +12,7 @@ locals {
 
 module "topic_bytes_alarm" {
   count                          = var.monitoring_configuration.enabled ? 1 : 0
-  source                         = "../../../provisioners/terraform/modules/gcp-cloud-monitoring-alarm/modules/utilization-threshold"
+  source                         = github.com / massdriver-cloud / terraform-google-monitoring-utilization-threshold
   md_metadata                    = var.md_metadata
   message                        = "PubSub Subscription ${var.md_metadata.name_prefix} is above backlogBytes threshold of ${local.threshold_backlog_bytes}"
   alarm_notification_channel_grn = var.subnetwork.data.observability.alarm_notification_channel_grn
