@@ -11,7 +11,7 @@ locals {
 }
 
 module "topic_bytes_alarm" {
-  source        = "github.com/massdriver-cloud/terraform-modules//google-monitoring-utilization-threshold?ref=3ec7921"
+  source        = "github.com/massdriver-cloud/terraform-modules//gcp-monitoring-utilization-threshold?ref=3ec7921"
   md_metadata   = var.md_metadata
   message       = "PubSub Subscription ${var.md_metadata.name_prefix} is above backlogBytes threshold of ${local.threshold_backlog_bytes}"
   alarm_name    = "${google_pubsub_subscription.main.id}-backlogBytes"
