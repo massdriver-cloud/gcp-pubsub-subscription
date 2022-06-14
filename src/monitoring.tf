@@ -9,15 +9,20 @@ locals {
     }
   }
 }
+module "alarm_channel" {
+  source      = "github.com/massdriver-cloud/terraform-modules//gcp-alarm-channel?ref=aa08797"
+  md_metadata = var.md_metadata
+}
 
 module "topic_bytes_alarm" {
-  source        = "github.com/massdriver-cloud/terraform-modules//gcp-monitoring-utilization-threshold?ref=3ec7921"
-  md_metadata   = var.md_metadata
-  message       = "PubSub Subscription ${var.md_metadata.name_prefix} is above backlogBytes threshold of ${local.threshold_backlog_bytes}"
-  alarm_name    = "${google_pubsub_subscription.main.id}-backlogBytes"
-  metric_type   = local.metrics["backlog_bytes"].metric
-  resource_type = local.metrics["backlog_bytes"].resource
-  threshold     = local.threshold_backlog_bytes
-  period        = 60
-  duration      = 60
+  source                  = "github.com/massdriver-cloud/terraform-modules//gcp-monitoring-utilization-threshold?ref=aa08797"
+  notification_channel_id = module.alarm_channel.id
+  md_metadata             = var.md_metadata
+  message                 = "PubSub Subscription ${var.md_metadata.name_prefix} is above backlogBytes threshold of ${local.threshold_backlog_bytes}"
+  alarm_name              = "${google_pubsub_subscription.main.id}-backlogBytes"
+  metric_type             = local.metrics["backlog_bytes"].metric
+  resource_type           = local.metrics["backlog_bytes"].resource
+  threshold               = local.threshold_backlog_bytes
+  period                  = 60
+  duration                = 60
 }
