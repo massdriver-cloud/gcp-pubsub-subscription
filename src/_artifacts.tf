@@ -24,7 +24,6 @@ locals {
 resource "massdriver_artifact" "subscription" {
   field                = "subscription"
   provider_resource_id = google_pubsub_subscription.main.id
-  type                 = "gcp-pubsub-subscription"
   name                 = "GCP PubSub Subscription ${var.md_metadata.name_prefix} (${google_pubsub_subscription.main.id})"
   artifact             = jsonencode(local.artifact_subscription)
 }
