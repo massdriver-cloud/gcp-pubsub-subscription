@@ -10,12 +10,12 @@ locals {
   }
 }
 module "alarm_channel" {
-  source      = "github.com/massdriver-cloud/terraform-modules//gcp-alarm-channel?ref=cafdc89"
+  source      = "github.com/massdriver-cloud/terraform-modules//gcp-alarm-channel?ref=bfcf556"
   md_metadata = var.md_metadata
 }
 
 module "topic_bytes_alarm" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//gcp-monitoring-utilization-threshold?ref=8997456"
+  source                  = "github.com/massdriver-cloud/terraform-modules//gcp-monitoring-utilization-threshold?ref=cafdc89"
   notification_channel_id = module.alarm_channel.id
   md_metadata             = var.md_metadata
   display_name            = "Message Backlog"
