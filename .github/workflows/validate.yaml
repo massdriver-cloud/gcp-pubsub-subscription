@@ -1,7 +1,9 @@
+# WARNING: This file is managed by: https://github.com/massdriver-cloud/bundle-github-repo-manager
+# DO NOT EDIT HERE. It will be over written.
 name: Validate
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
 
 jobs:
   build:
