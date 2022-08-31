@@ -4,6 +4,12 @@ locals {
   }
 
   data_security = {
+      iam = {
+       subscriber = {
+         role      = "roles/pubsub.subscriber"
+         condition = "resource.name.endsWith(\"${var.md_metadata.name_prefix}\")"
+       }
+     }
   }
 
   specs_subscription = {
