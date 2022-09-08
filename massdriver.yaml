@@ -1,7 +1,7 @@
 schema: draft-07
 name: gcp-pubsub-subscription
 description: "GCP subscription to a PubSub Topic"
-ref: github.com/massdriver-cloud/gcp-pubsub-subscription
+source_url: github.com/massdriver-cloud/gcp-pubsub-subscription
 access: public
 type: bundle
 
