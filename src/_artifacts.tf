@@ -4,12 +4,13 @@ locals {
   }
 
   data_security = {
-      iam = {
-       subscriber = {
-         role      = "roles/pubsub.subscriber"
-         condition = "resource.name.endsWith(\"${var.md_metadata.name_prefix}\")"
-       }
-     }
+    iam = {
+      subscriber = {
+        role = "roles/pubsub.subscriber"
+        # intentionally left blank, using a condition here causes issues
+        condition = ""
+      }
+    }
   }
 
   specs_subscription = {
@@ -30,6 +31,6 @@ locals {
 resource "massdriver_artifact" "subscription" {
   field                = "subscription"
   provider_resource_id = google_pubsub_subscription.main.id
-  name                 = "GCP PubSub Subscription ${var.md_metadata.name_prefix} (${google_pubsub_subscription.main.id})"
+  name                 = var.md_metadata.name_prefix
   artifact             = jsonencode(local.artifact_subscription)
 }
