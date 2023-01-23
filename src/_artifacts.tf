@@ -4,13 +4,13 @@ locals {
   }
 
   data_security = {
-      iam = {
-       subscriber = {
-         role      = "roles/pubsub.subscriber"
-         # intentionally left blank, using a condition here causes issues
-         condition = ""
-       }
-     }
+    iam = {
+      subscriber = {
+        role = "roles/pubsub.subscriber"
+        # intentionally left blank, using a condition here causes issues
+        condition = ""
+      }
+    }
   }
 
   specs_subscription = {

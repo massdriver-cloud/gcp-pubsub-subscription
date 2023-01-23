@@ -164,18 +164,37 @@ Connections from other bundles that this bundle depends on.
   - **`specs`** *(object)*
     - **`gcp`** *(object)*: .
       - **`project`** *(string)*
-      - **`region`** *(string)*: GCP region. Must be one of: `['us-east1', 'us-east4', 'us-west1', 'us-west2', 'us-west3', 'us-west4', 'us-central1']`.
+      - **`region`** *(string)*: The GCP region to provision resources in.
 
         Examples:
+        ```json
+        "us-east1"
+        ```
+
+        ```json
+        "us-east4"
+        ```
+
+        ```json
+        "us-west1"
+        ```
+
         ```json
         "us-west2"
         ```
 
-      - **`resource`** *(string)*
-      - **`service`** *(string)*
-      - **`zone`** *(string)*: GCP Zone.
+        ```json
+        "us-west3"
+        ```
 
-        Examples:
+        ```json
+        "us-west4"
+        ```
+
+        ```json
+        "us-central1"
+        ```
+
 - **`subnetwork`** *(object)*: A region-bound network for deploying GCP resources. Cannot contain additional properties.
   - **`data`** *(object)*
     - **`infrastructure`** *(object)*
@@ -244,21 +263,67 @@ Connections from other bundles that this bundle depends on.
         "projects/my-project/locations/us-west2/clusters/my-gke-cluster"
         ```
 
+      - **`vpc_access_connector`** *(string)*: GCP Resource Name (GRN).
+
+        Examples:
+        ```json
+        "projects/my-project/global/networks/my-global-network"
+        ```
+
+        ```json
+        "projects/my-project/regions/us-west2/subnetworks/my-subnetwork"
+        ```
+
+        ```json
+        "projects/my-project/topics/my-pubsub-topic"
+        ```
+
+        ```json
+        "projects/my-project/subscriptions/my-pubsub-subscription"
+        ```
+
+        ```json
+        "projects/my-project/locations/us-west2/instances/my-redis-instance"
+        ```
+
+        ```json
+        "projects/my-project/locations/us-west2/clusters/my-gke-cluster"
+        ```
+
   - **`specs`** *(object)*
     - **`gcp`** *(object)*: .
       - **`project`** *(string)*
-      - **`region`** *(string)*: GCP region. Must be one of: `['us-east1', 'us-east4', 'us-west1', 'us-west2', 'us-west3', 'us-west4', 'us-central1']`.
+      - **`region`** *(string)*: The GCP region to provision resources in.
 
         Examples:
+        ```json
+        "us-east1"
+        ```
+
+        ```json
+        "us-east4"
+        ```
+
+        ```json
+        "us-west1"
+        ```
+
         ```json
         "us-west2"
         ```
 
-      - **`resource`** *(string)*
-      - **`service`** *(string)*
-      - **`zone`** *(string)*: GCP Zone.
+        ```json
+        "us-west3"
+        ```
 
-        Examples:
+        ```json
+        "us-west4"
+        ```
+
+        ```json
+        "us-central1"
+        ```
+
 - **`topic`** *(object)*: GCP PubSub Topic. Cannot contain additional properties.
   - **`data`** *(object)*: Cannot contain additional properties.
     - **`infrastructure`** *(object)*: PubSub topic configuration. Cannot contain additional properties.
