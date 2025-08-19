@@ -1,28 +1,27 @@
 schema: draft-07
 name: gcp-pubsub-subscription
-description: "GCP subscription to a PubSub Topic"
-source_url: github.com/massdriver-cloud/gcp-pubsub-subscription
-access: public
-type: bundle
-
+version: 1.0.0
+description: GCP subscription to a PubSub Topic
+source_url: https://github.com/massdriver-cloud/gcp-pubsub-subscription
+type: application
 params:
   examples:
-    - __name: Development
-      enable_message_ordering: false
-      ack_deadline_seconds: 10
-    - __name: Production
-      enable_message_ordering: true
-      message_retention_duration_seconds: 800
-      ack_deadline_seconds: 30
-      monitoring_configuration:
-        enabled: true
+  - __name: Development
+    enable_message_ordering: false
+    ack_deadline_seconds: 10
+  - __name: Production
+    enable_message_ordering: true
+    message_retention_duration_seconds: 800
+    ack_deadline_seconds: 30
+    monitoring_configuration:
+      enabled: true
   required:
-    - enable_message_ordering
-    - message_retention_duration_seconds
-    - ack_deadline_seconds
-    - retain_acked_messages
-    - minimum_backoff_seconds
-    - monitoring_configuration
+  - enable_message_ordering
+  - message_retention_duration_seconds
+  - ack_deadline_seconds
+  - retain_acked_messages
+  - minimum_backoff_seconds
+  - monitoring_configuration
   properties:
     enable_message_ordering:
       type: boolean
@@ -66,41 +65,41 @@ params:
           title: Retained Bytes Above
           default: 1000
           minimum: 0
-          # 1MB
           maximum: 1000000
-
 connections:
   required:
-    - gcp_authentication
-    # I know the canvas would look weird, this is
-    # only here for now, for region and monitoring
-    - subnetwork
-    - topic
+  - gcp_authentication
+  - subnetwork
+  - topic
   properties:
     gcp_authentication:
-      $ref: massdriver/gcp-service-account
+      "$ref": massdriver/gcp-service-account
     subnetwork:
-      $ref: massdriver/gcp-subnetwork
+      "$ref": massdriver/gcp-subnetwork
     topic:
-      $ref: massdriver/gcp-pubsub-topic
-
+      "$ref": massdriver/gcp-pubsub-topic
 artifacts:
   required:
-    - subscription
+  - subscription
   properties:
     subscription:
-      $ref: massdriver/gcp-pubsub-subscription
-
+      "$ref": massdriver/gcp-pubsub-subscription
 ui:
   ui:order:
-    - enable_message_ordering
-    - message_retention_duration_seconds
-    - ack_deadline_seconds
-    - retain_acked_messages
-    - minimum_backoff_seconds
-    - monitoring_configuration
-    - "*"
+  - enable_message_ordering
+  - message_retention_duration_seconds
+  - ack_deadline_seconds
+  - retain_acked_messages
+  - minimum_backoff_seconds
+  - monitoring_configuration
+  - "*"
   monitoring_configuration:
     ui:order:
-      - enabled
-      - backlog_bytes_above
+    - enabled
+    - backlog_bytes_above
+steps:
+- path: src
+  provisioner: opentofu
+  config:
+    checkov:
+      enable: true
