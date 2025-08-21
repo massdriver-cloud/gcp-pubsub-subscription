@@ -29,8 +29,7 @@ locals {
 }
 
 resource "massdriver_artifact" "subscription" {
-  field                = "subscription"
-  provider_resource_id = google_pubsub_subscription.main.id
-  name                 = "GCP PubSub Subscription ${var.md_metadata.name_prefix}"
-  artifact             = jsonencode(local.artifact_subscription)
+  field    = "subscription"
+  name     = "GCP PubSub Subscription ${var.md_metadata.name_prefix}"
+  artifact = jsonencode(local.artifact_subscription)
 }
