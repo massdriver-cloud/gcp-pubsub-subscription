@@ -72,17 +72,17 @@ connections:
   - topic
   properties:
     gcp_authentication:
-      "$ref": massdriver/gcp-service-account
+      "$ref": gcp-service-account
     subnetwork:
-      "$ref": massdriver/gcp-subnetwork
+      "$ref": gcp-subnetwork
     topic:
-      "$ref": massdriver/gcp-pubsub-topic
+      "$ref": gcp-pubsub-topic
 artifacts:
   required:
   - subscription
   properties:
     subscription:
-      "$ref": massdriver/gcp-pubsub-subscription
+      "$ref": gcp-pubsub-subscription
 ui:
   ui:order:
   - enable_message_ordering

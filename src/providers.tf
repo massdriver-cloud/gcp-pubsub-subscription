@@ -18,8 +18,8 @@ terraform {
 
 
 provider "google" {
-  project     = var.gcp_authentication.data.project_id
-  credentials = jsonencode(var.gcp_authentication.data)
+  project     = var.gcp_authentication.project_id
+  credentials = jsonencode(var.gcp_authentication)
   # see note in massdriver.yaml
   region = var.subnetwork.specs.gcp.region
 }
