@@ -1,9 +1,9 @@
 locals {
-  data_infrastructure = {
+  infrastructure = {
     grn = google_pubsub_subscription.main.id
   }
 
-  data_security = {
+  security = {
     iam = {
       subscriber = {
         role = "roles/pubsub.subscriber"
@@ -18,10 +18,8 @@ locals {
   }
 
   artifact_subscription = {
-    data = {
-      infrastructure = local.data_infrastructure
-      security       = local.data_security
-    }
+    infrastructure = local.infrastructure
+    security       = local.security
     specs = {
       subscription = local.specs_subscription
     }

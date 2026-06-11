@@ -58,13 +58,11 @@ variable "retain_acked_messages" {
 }
 variable "subnetwork" {
   type = object({
-    data = object({
-      infrastructure = object({
-        cidr                   = string
-        gcp_global_network_grn = string
-        grn                    = string
-        vpc_access_connector   = string
-      })
+    infrastructure = object({
+      cidr                   = string
+      gcp_global_network_grn = string
+      grn                    = string
+      vpc_access_connector   = string
     })
     specs = object({
       gcp = optional(object({
@@ -76,16 +74,14 @@ variable "subnetwork" {
 }
 variable "topic" {
   type = object({
-    data = object({
-      infrastructure = object({
-        grn = string
-      })
-      security = object({
-        iam = optional(map(object({
-          condition = string
-          role      = any
-        })))
-      })
+    infrastructure = object({
+      grn = string
+    })
+    security = object({
+      iam = optional(map(object({
+        condition = string
+        role      = any
+      })))
     })
     specs = object({
       topic = optional(object({

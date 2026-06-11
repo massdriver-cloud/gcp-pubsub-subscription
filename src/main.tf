@@ -1,6 +1,6 @@
 resource "google_pubsub_subscription" "main" {
   name                       = var.md_metadata.name_prefix
-  topic                      = var.topic.data.infrastructure.grn
+  topic                      = var.topic.infrastructure.grn
   labels                     = var.md_metadata.default_tags
   message_retention_duration = "${var.message_retention_duration_seconds}s"
   retain_acked_messages      = var.retain_acked_messages
